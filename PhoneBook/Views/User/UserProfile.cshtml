@@ -1,0 +1,164 @@
+﻿@{
+    ViewData["Title"] = "User Profile";
+}
+<h2>@ViewData["Title"]</h2>
+
+
+@model UserProfile
+
+@{
+    if (Model.Id < 1)
+    {
+        ViewData["Disabled"] = "disabled";
+    }
+}
+
+
+<div style="line-height: 50px;">
+    <label style="color: @ViewData["LabelColor"]">@ViewData["StatusMessage"]</label>
+</div>
+
+
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UserProfile" id="UserProfileForm">
+
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id"/>
+            <div class="form-group">
+                <input asp-for="UserId" type="hidden" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control"/>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control"/>
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MiddleName" class="control-label"></label>
+                <input asp-for="MiddleName" class="form-control"/>
+                <span asp-validation-for="MiddleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrganizationName" class="control-label"></label>
+                <input asp-for="OrganizationName" class="form-control"/>
+                <span asp-validation-for="OrganizationName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control"/>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <hr/>
+
+            <div id="PhoneNumberContainer">
+                @Html.EditorFor(x => x.UserPhoneNumbers)
+
+            </div>
+
+            <div class="form-button">
+
+                <input type="button" id="btnAddPhoneNumber" value="New PhoneNumber" class=" btn btn-success btn-sm"/>
+
+            </div>
+            <hr/>
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control"/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <hr/>
+
+            <div id="EmailContainer">
+                @Html.EditorFor(x => x.UserEmails)
+
+            </div>
+
+            <div class="form-button">
+
+                <input type="button" id="btnAddEmail" value="New Email" class=" btn btn-success btn-sm"/>
+
+            </div>
+
+            <hr/>
+
+
+            <div style="height: 50px;"></div>
+
+            <div class="row">
+                <div class="col-md-12 bg-light text-center">
+                    <input type="submit" id="Delete" onclick-stop-propagation onclick-prevent-default
+                           onclick="if (!confirm('Are you sure you want delete User Profile?')) return false;"
+                           value="Delete" asp-action="Delete" class=" btn btn-danger cancel" style="float: left;"
+                           causesvalidation="false" disabled="@ViewData["Disabled"]"/>
+                    <input type="submit" id="Cancel" OnClientClick="javascript: return false;" value="Cancel"
+                           asp-action="Cancel" class="btn  btn-secondary cancel" causesvalidation="false"/>
+                    <input type="submit" id="Save" value="Save" class="btn  btn-warning" style="float: right;"/>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+    <script>
+
+
+        $(document).ready(function() {
+
+
+            $("#UserProfileForm").keypress(function(e) {
+                kCode = e.keyCode || e.charCode; //for cross browser
+                if (kCode == 13) {
+                    //$("#Save").click();
+                    return false;
+                }
+            });
+
+            $(function() {
+                $("#btnAddEmail").click(function(e) {
+                    var itemIndex = $("#EmailContainer input.iHidden").length;
+                    e.preventDefault();
+                    $.get("@Url.Action("NewUserEmail", "User")/?index=" + itemIndex,
+                        function(data) {
+                            $("#EmailContainer").append(data);
+                        });
+                });
+            });
+
+            $(function() {
+                $("#btnAddPhoneNumber").click(function(e) {
+                    var itemIndex = $("#PhoneNumberContainer input.iHidden").length;
+                    e.preventDefault();
+                    $.get("@Url.Action("NewUserPhoneNumber", "User")/?index=" + itemIndex,
+                        function(data) {
+                            $("#PhoneNumberContainer").append(data);
+                        });
+                });
+            });
+
+            $(".removeDiv").click(function() {
+                $(this).parents("#removeAddMoreDiv").find(".mark-for-delete").val('True');
+
+                $(this).parents("#removeAddMoreDiv").hide();
+            });
+
+        });
+
+    </script>
+}

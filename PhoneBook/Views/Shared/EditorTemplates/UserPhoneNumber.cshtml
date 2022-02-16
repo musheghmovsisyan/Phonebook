@@ -1,0 +1,19 @@
+﻿@model UserPhoneNumber
+
+
+<div class="form-group" id="removeAddMoreDiv">
+    <label asp-for="PhoneNumber"></label>
+    <input asp-for="PhoneNumber" class=" form-control"/>
+    <button type="button" class="  btn btn-danger btn-sm removeDiv">
+        Remove
+    </button>
+    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    <input type="hidden" asp-for="Id" class="iHidden"/>
+    <input type="hidden" asp-for="DeletePhone" class="mark-for-delete"/>
+
+</div>
+
+
+@{
+    Layout = null;
+}

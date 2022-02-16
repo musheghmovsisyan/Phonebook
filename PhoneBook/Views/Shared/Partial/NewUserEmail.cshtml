@@ -1,0 +1,41 @@
+﻿@model UserEmail
+
+@{
+    Layout = null;
+}
+
+
+<div class="form-group" id="removeAddMoreDiv">
+    <label class="control-label" for="UserEmails_@(ViewBag.EmailIndex)__Email">Email</label>
+    <input class="form-control" type="text" data-val="true" data-val-required="The Email field is required." id="UserEmails_@(ViewBag.EmailIndex)__Email" name="UserEmails[@(ViewBag.EmailIndex)].Email" value="">
+    <button type="button" class="  btn btn-danger btn-sm removeDiv">
+        Remove
+    </button>
+    <input type="hidden" class="iHidden" data-val="true" id="UserEmails_@(ViewBag.EmailIndex)__Id" name="UserEmails[@(ViewBag.EmailIndex)].Id" value="0">
+    <span class="text-danger field-validation-valid " data-valmsg-for="UserEmails[@(ViewBag.EmailIndex)].Email" data-valmsg-replace="true"></span>
+    <input type="hidden" class="mark-for-delete" data-val="true" id="UserEmails_@(ViewBag.EmailIndex)__DeleteEmail" name="UserEmails[@(ViewBag.EmailIndex)].DeleteEmail" value="False">
+
+
+</div>
+
+<script>
+    $(function() {
+        $("#UserEmails_@(ViewBag.EmailIndex)__Email").rules("add",
+            {
+                required: true
+            });
+    });
+</script>
+
+
+<script>
+
+
+    $(document).ready(function() {
+        $(".removeDiv").click(function() {
+            $(this).parents("#removeAddMoreDiv").find(".mark-for-delete").val('True');
+
+            $(this).parents("#removeAddMoreDiv").hide();
+        });
+    });
+</script>

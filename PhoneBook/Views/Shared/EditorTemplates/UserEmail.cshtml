@@ -1,0 +1,23 @@
+﻿@model UserEmail
+
+
+<div class="form-group" id="removeAddMoreDiv">
+    <label asp-for="Email"></label>
+    <input asp-for="Email" class=" form-control"/>
+
+
+    <button type="button" class="  btn btn-danger btn-sm removeDiv">
+        Remove
+    </button>
+
+
+    <span asp-validation-for="Email" class="text-danger"></span>
+    <input type="hidden" asp-for="Id" class="iHidden"/>
+    <input type="hidden" asp-for="DeleteEmail" class="mark-for-delete"/>
+
+</div>
+
+
+@{
+    Layout = null;
+}

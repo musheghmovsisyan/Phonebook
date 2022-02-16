@@ -1,0 +1,43 @@
+﻿@model UserPhoneNumber
+
+@{
+    Layout = null;
+}
+
+
+<div class="form-group" id="removeAddMoreDiv">
+    <label class="control-label" for="UserPhoneNumbers_@(ViewBag.PhoneNumberIndex)__PhoneNumber">PhoneNumber</label>
+    <input class="form-control" type="text" data-val="true" data-val-required="The PhoneNumber field is required."
+           id="UserPhoneNumbers_@(ViewBag.PhoneNumberIndex)__PhoneNumber" name="UserPhoneNumbers[@(ViewBag.PhoneNumberIndex)].PhoneNumber"
+           data-val-regex="PhoneNumber  Invalid" aria-describedby="PhoneNumber-error" value="">
+    <button type="button" class="  btn btn-danger btn-sm removeDiv">
+        Remove
+    </button>
+    <input type="hidden" class="iHidden" data-val="true" id="UserPhoneNumbers_@(ViewBag.PhoneNumberIndex)__Id" name="UserPhoneNumbers[@(ViewBag.PhoneNumberIndex)].Id" value="0">
+    <span class="text-danger field-validation-valid " data-valmsg-for="UserPhoneNumbers[@(ViewBag.PhoneNumberIndex)].PhoneNumber" data-valmsg-replace="true" data-val-regex="PhoneNumber  Invalid"></span>
+    <input type="hidden" class="mark-for-delete" data-val="true" id="UserPhoneNumbers_@(ViewBag.PhoneNumberIndex)__DeletePhone" name="UserPhoneNumbers[@(ViewBag.PhoneNumberIndex)].DeletePhone" value="False">
+
+</div>
+
+<script>
+    $(function() {
+        $("#UserPhoneNumbers_@(ViewBag.PhoneNumberIndex)__PhoneNumber").rules("add",
+            {
+                required: true
+            });
+        $("#UserPhoneNumbers_@(ViewBag.PhoneNumberIndex)__PhoneNumber").rules("add", { regex: "^[0-9]+$", messages: { regex: "PhoneNumber  Invalid" } });
+
+    });
+</script>
+
+<script>
+
+
+    $(document).ready(function() {
+        $(".removeDiv").click(function() {
+            $(this).parents("#removeAddMoreDiv").find(".mark-for-delete").val('True');
+
+            $(this).parents("#removeAddMoreDiv").hide();
+        });
+    });
+</script>
