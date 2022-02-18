@@ -67,40 +67,20 @@ public class UserController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> UserProfile(UserProfile userProfile)
     {
-        var isUserEmailsDeleted = userProfile.UserEmails.Any(_ => _.DeleteEmail);
-        var isUserPhoneNumbersDeletedCount = userProfile.UserPhoneNumbers.Any(_ => _.DeletePhone);
-
-        var userEmailsDeleteItems = userProfile.UserEmails.Where(_ => _.DeleteEmail && _.Id != 0)
-            .Select(_ => new DeleteItem {Id = _.Id}).ToList() ?? new List<DeleteItem>();
-        var userPhonesDeleteItems = userProfile.UserPhoneNumbers.Where(_ => _.DeletePhone && _.Id != 0)
-            .Select(_ => new DeleteItem {Id = _.Id}).ToList() ?? new List<DeleteItem>();
-
-        userProfile.UserEmailsDeleted = userProfile.UserEmailsDeleted.Union(userEmailsDeleteItems).ToList();
-        userProfile.UserPhoneNumbersDeleted = userProfile.UserPhoneNumbersDeleted.Union(userPhonesDeleteItems).ToList();
-
-        userProfile.UserEmails = userProfile.UserEmails.Where(_ => !_.DeleteEmail).ToList();
-        userProfile.UserPhoneNumbers = userProfile.UserPhoneNumbers.Where(_ => !_.DeletePhone).ToList();
-
-        if (isUserEmailsDeleted || isUserPhoneNumbersDeletedCount)
-        {
-            ModelState.Clear();
-        }
-
-        DisplayMessage();
+        UpdateDeletedItemsStatus(userProfile);
 
         if (TryValidateModel(userProfile, nameof(Models.UserProfile)) && ModelState.IsValid)
         {
             var userProfileDto = _mapper.Map<Core.Entity.UserProfile>(userProfile);
 
-            var userEmailsDeletedIds = userProfile.UserEmailsDeleted.Select(_ => _.Id).ToList();
-
-            var userPhoneNumbersDeletedIds = userProfile.UserPhoneNumbersDeleted.Select(_ => _.Id).ToList();
-
-            var userEmails = userProfileDto.UserEmails;
-            var userPhoneNumbers = userProfileDto.UserPhoneNumbers;
-
             if (userProfileDto.Id > 0)
             {
+                var userEmails = userProfileDto.UserEmails;
+                var userPhoneNumbers = userProfileDto.UserPhoneNumbers;
+
+                var userEmailsDeletedIds = userProfile.UserEmailsDeleted.Select(_ => _.Id).ToList();
+                var userPhoneNumbersDeletedIds = userProfile.UserPhoneNumbersDeleted.Select(_ => _.Id).ToList();
+
                 foreach (var userEmail in userEmails) userEmail.UserProfileId = userProfileDto.Id;
                 foreach (var userPhoneNumber in userPhoneNumbers) userPhoneNumber.UserProfileId = userProfileDto.Id;
 
@@ -130,8 +110,31 @@ public class UserController : Controller
         }
 
         SetErrorMessage("Check Input data.");
+        DisplayMessage();
 
         return View(userProfile);
+    }
+
+    private void UpdateDeletedItemsStatus(UserProfile userProfile)
+    {
+        var isUserEmailsDeleted = userProfile.UserEmails.Any(_ => _.DeleteEmail);
+        var isUserPhoneNumbersDeletedCount = userProfile.UserPhoneNumbers.Any(_ => _.DeletePhone);
+
+        var userEmailsDeleteItems = userProfile.UserEmails.Where(_ => _.DeleteEmail && _.Id != 0)
+            .Select(_ => new DeleteItem {Id = _.Id}).ToList() ?? new List<DeleteItem>();
+        var userPhonesDeleteItems = userProfile.UserPhoneNumbers.Where(_ => _.DeletePhone && _.Id != 0)
+            .Select(_ => new DeleteItem {Id = _.Id}).ToList() ?? new List<DeleteItem>();
+
+        userProfile.UserEmailsDeleted = userProfile.UserEmailsDeleted.Union(userEmailsDeleteItems).ToList();
+        userProfile.UserPhoneNumbersDeleted = userProfile.UserPhoneNumbersDeleted.Union(userPhonesDeleteItems).ToList();
+
+        userProfile.UserEmails = userProfile.UserEmails.Where(_ => !_.DeleteEmail).ToList();
+        userProfile.UserPhoneNumbers = userProfile.UserPhoneNumbers.Where(_ => !_.DeletePhone).ToList();
+
+        if (isUserEmailsDeleted || isUserPhoneNumbersDeletedCount)
+        {
+            ModelState.Clear();
+        }
     }
 
     public ActionResult NewUserEmail(int index)
