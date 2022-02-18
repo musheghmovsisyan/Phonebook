@@ -1,34 +1,26 @@
-html {
-  font-size: 14px;
-}
+html { font-size: 14px; }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html { font-size: 16px; }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    min-height: 100%;
+    position: relative;
 }
 
-body {
-  margin-bottom: 60px;
-}
+body { margin-bottom: 60px; }
 
-.form-button {
-    margin: 20px 20px 20px 0;
-}
-.iHidden{}
-.mark-for-delete {
-}
-.removeDiv {
-    margin-top: 5px;
-}
-.text-right {
-    text-align: right !important;
-}
+.form-button { margin: 20px 20px 20px 0; }
 
-.AddedInput {
-}
+.removeDiv { margin-top: 5px; }
+
+.text-right { text-align: right !important; }
+
+.iHidden { }
+
+.mark-for-delete { }
+
+.hidden-group { }
+
+.AddedInput { }

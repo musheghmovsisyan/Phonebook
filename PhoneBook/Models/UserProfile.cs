@@ -37,5 +37,9 @@ public class UserProfile
 
     public virtual ICollection<UserPhoneNumber> UserPhoneNumbers { get; set; } = new List<UserPhoneNumber>();
 
+    public virtual ICollection<DeleteItem> UserEmailsDeleted { get; set; } = new List<DeleteItem>();
+
+    public virtual ICollection<DeleteItem> UserPhoneNumbersDeleted { get; set; } = new List<DeleteItem>();
+
 
 }

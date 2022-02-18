@@ -12,6 +12,6 @@ public interface IUserProfileServices
 
     bool Delete(long id, long userId);
 
-    bool DeleteUserPhoneNumbers(IList<UserPhoneNumber> userEmail);
-    bool DeleteUserEmails(IList<UserEmail> userEmail);
+    bool DeleteUserPhoneNumbers(IList<long> userPhoneNumberIds);
+    bool DeleteUserEmails(IList<long> userEmailIds);
 }

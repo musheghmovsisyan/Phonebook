@@ -65,11 +65,13 @@ public class UserProfileServices : IUserProfileServices
         return false;
     }
 
-    public bool DeleteUserPhoneNumbers(IList<UserPhoneNumber> userPhoneNumber)
+    public bool DeleteUserPhoneNumbers(IList<long> userPhoneNumberIds)
     {
         try
         {
-            _dbContext.RemoveRange(userPhoneNumber);
+            var userPhoneForDelete = _dbContext.UserPhoneNumbers.Where(_ => userPhoneNumberIds.Contains(_.Id)).ToList();
+
+            _dbContext.RemoveRange(userPhoneForDelete);
             _dbContext.SaveChanges();
 
             return true;
@@ -82,11 +84,12 @@ public class UserProfileServices : IUserProfileServices
         return false;
     }
 
-    public bool DeleteUserEmails(IList<UserEmail> userEmail)
+    public bool DeleteUserEmails(IList<long> userEmailIds)
     {
         try
         {
-            _dbContext.RemoveRange(userEmail);
+            var userEmailsForDelete = _dbContext.UserEmails.Where(_ => userEmailIds.Contains(_.Id)).ToList();
+            _dbContext.RemoveRange(userEmailsForDelete);
             _dbContext.SaveChanges();
 
             return true;

@@ -82,7 +82,15 @@
                 @Html.EditorFor(x => x.UserEmails)
 
             </div>
+            
+            <div id="EmailsDeletedContainer">
+                @Html.EditorFor(x => x.UserEmailsDeleted)
 
+            </div>
+            <div id="PhoneNumbersDeleted)Container">
+                @Html.EditorFor(x => x.UserPhoneNumbersDeleted)
+
+            </div>
             <div class="form-button">
 
                 <input type="button" id="btnAddEmail" value="New Email" class=" btn btn-success btn-sm"/>
