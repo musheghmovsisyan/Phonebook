@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhoneBook.Core", "Libs\Phon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhoneBook.Infrastructure", "Libs\Phonebook.Infrastructure\PhoneBook.Infrastructure.csproj", "{776B1F0A-819D-4B4B-8F9B-1F27E3AEB53E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneBook", "PhoneBook\PhoneBook.csproj", "{2069EC38-CB7C-49F1-AB2C-4CCAD27B1CE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhoneBook", "PhoneBook\PhoneBook.csproj", "{2069EC38-CB7C-49F1-AB2C-4CCAD27B1CE0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Info", "Info", "{4BFDEE0A-1B2F-4C61-882C-B17EDC7FDA82}"
+	ProjectSection(SolutionItems) = preProject
+		Info\Technical Description.docx = Info\Technical Description.docx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
